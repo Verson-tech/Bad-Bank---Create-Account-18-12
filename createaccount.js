@@ -33,7 +33,7 @@ function CreateAccount(){
 
   return (
     <Card
-      bgcolor="primary"
+      bgcolor="info"
       header="Create Account"
       status={status}
       body={show ? (  
@@ -49,7 +49,7 @@ function CreateAccount(){
             ):(
               <>
               <h5>Success</h5>
-              <button type="submit" className="btn btn-light" onClick={clearForm}>Add another account</button>
+              <button type="submit" className="btn btn-light"  data-toggle="tooltip" data-placement="bottom" title="Proceed to adding another account" onClick={clearForm}>Add another account</button>
               </>
             )}
     />
