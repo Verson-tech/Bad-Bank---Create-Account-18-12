@@ -9,7 +9,7 @@ function Deposit(){
 
   function digitalInput(field, label){
       if (!field) {
-        setStatus('Error: ' + label);
+        setStatus('Success: ' + label);
         setTimeout(() => setStatus(''),3000);
         return false;
       }
@@ -17,11 +17,25 @@ function Deposit(){
   }
 
   function handleCreate(){
-    console.log(depositAmount);
-    if (!digitalInput(depositAmount,     'This feature is currently unavailable (WIP)'))     return;
+    console.log("+++++++")
+    console.log(ctx.users[0].setBalance(ctx.users[0].balance+deposit))
+    console.log("++++++++")
+    console.log(deposit);
+    if (!digitalInput (depositAmount,    'Your balance got updated!!!'))     return;  //changed message
         ctx.users.push({depositAmount,balance:100});
     setShow(false);
   }    
+
+  function checkPos(e){
+    console.log(e.target.value)
+    if(e.target.value>=0){
+      setDeposit(Number(e.target.value))  //added Number () to convert input string to number
+    }else{
+      console.log("enter a positive value")
+    }
+   // e => setDeposit(e.currentTarget.value
+    console.log("YOU HIT THIS FUNCTION")
+  }
 
   function clearForm(){
     setName('');
@@ -31,13 +45,13 @@ function Deposit(){
     <Card
     bgcolor="info"
     txtcolor="light"
-    header=" 🏛 Balance"
+    header={`🏛 Balance ${ctx.users[0].balance}`}
     status={status}
     body={show ? (  
             <>
            
             Deposit amount<br/>
-            <input type="number" className="form-control" id="deposit" placeholder="Enter amount" value={deposit} onChange={e => setDeposit(e.currentTarget.value)}/><br/>
+            <input type="number" className="form-control" id="deposit" placeholder="Enter amount" value={deposit} onChange={checkPos}/><br/>   
             <button type="submit" className="btn btn-light" onClick={handleCreate}>Deposit </button>
             </>
           ):(
