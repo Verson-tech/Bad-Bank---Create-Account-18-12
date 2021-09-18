@@ -1,69 +1,98 @@
-function Withdraw(){
+function Withdraw() {
+  const [show, setShow] = React.useState(true);
+  const [status, setStatus] = React.useState("");
 
-  const [show, setShow]         = React.useState(true);
-  const [status, setStatus]     = React.useState('');
-  
-  const [withdrawAmount, setName]    = React.useState('');
-  const [withdraw, seWithdraw] = React.useState('');
-  const ctx = React.useContext(UserContext);  
+  const [withdrawAmount, setName] = React.useState("");
+  const [withdraw, seWithdraw] = React.useState("");
+  const ctx = React.useContext(UserContext);
 
-  function digitalInput(field, label){
-      if (!field) {
-        setStatus('Success: ' + label);
-        setTimeout(() => setStatus(''),3000);
-        return false;
-      }
-      return true;
-  }
-
-  function handleCreate(){
-    console.log('*******');
-    // console.log(withdrawAmount);
-    console.log(ctx.users[0].setBalance(ctx.users[0].balance-withdraw))     // balance updates at every withdraw         
-    console.log('******');
-    if (!digitalInput(withdrawAmount,     'Your balance got updated!!!'))     return;   //changed message
-
-
-
-        ctx.users.push({withdrawAmount,balance:100});
-    setShow(false);
-  }    
-
-  function checkPos(e){
-    console.log(e.target.value)
-    if(e.target.value>=0){
-      seWithdraw(Number(e.currentTarget.value))  //added Number () to convert input string to number
-    }else{
-      console.log("enter a positive value")
+  function validate(field, label) {
+    if (!field) {
+      setStatus("Success: " + label);
+      setTimeout(() => setStatus(""), 3000);
+      return false;
     }
-   // e => seWithdraw(e.currentTarget.value
-    console.log("YOU HIT THIS FUNCTION")
+    return true;
   }
 
-
-  function clearForm(){
-    setName('');
-      setShow(true);
-  }; 
-    return(
-    <Card
-    bgcolor="info"
-    txtcolor="light"
-    header={`🏛 Balance ${ctx.users[0].balance}`}            // displayed balance amount
-    status={status}
-    body={show ? (  
-            <>
-           
-            Withdraw amount<br/>
-            <input type="number" className="form-control" id="withdraw" placeholder="Enter amount" value={withdraw} onChange={checkPos}/><br/>
-            <button type="submit" className="btn btn-light" onClick={handleCreate}>Withdraw </button>
-            </>
-          ):(
-            <>
-            <h5>Success</h5>
-            <button type="submit" className="form-control"  data-toggle="tooltip" data-placement="bottom" title="Proceed to adding another account" onClick={clearForm}>Add another account</button>
-            </>
-          )}
-  />
+  function handleCreate() {
+    console.log("*******");
+    // console.log(withdrawAmount);
+    console.log(ctx.users[0].setBalance(ctx.users[0].balance - withdraw)); // balance updates at every withdraw
+    console.log("******");
+    if (
+      !validate(
+        withdrawAmount,
+        `Your balance got updated!!! Current total: ${
+          ctx.users[0].balance - withdraw
+        }`
+      )
     )
-          }
+      return; //changed message
+
+    ctx.users.push({ withdrawAmount, balance });
+    setShow(false);
+  }
+
+  function checkPos(e) {
+    console.log(e.target.value);
+    if (e.target.value >= 0) {
+      seWithdraw(Number(e.currentTarget.value)); //added Number () to convert input string to number
+    } else {
+      console.log("enter a positive value");
+    }
+    // e => seWithdraw(e.currentTarget.value
+    console.log("YOU HIT THIS FUNCTION");
+  }
+
+  function clearForm() {
+    setName("");
+    setShow(true);
+  }
+  return (
+    <Card
+      bgcolor="info"
+      txtcolor="light"
+      header={`🏛 Balance ${ctx.users[0].balance}`} // displayed balance amount
+      status={status}
+      body={
+        show ? (
+          <>
+            Withdraw amount
+            <br />
+            <input
+              type="number"
+              className="form-control"
+              id="withdraw"
+              placeholder="Enter amount"
+              value={withdraw}
+              onChange={checkPos}
+            />
+            <br />
+            <button
+              type="submit"
+              className="btn btn-light"
+              onClick={handleCreate}
+            >
+              Withdraw{" "}
+            </button>
+          </>
+        ) : (
+          <>
+            <h5>Success</h5>
+            <button
+              type="submit"
+              className="btn btn-light"
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="Proceed to withdraw funds"
+              onClick={clearForm}
+            >
+              Withdraw
+            </button>
+          </>
+        )
+      }
+    />
+  );
+}
