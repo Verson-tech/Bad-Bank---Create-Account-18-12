@@ -3,13 +3,13 @@ function Withdraw(){
   const [show, setShow]         = React.useState(true);
   const [status, setStatus]     = React.useState('');
   
-  const [depositAmount, setName]    = React.useState('');
-  const [deposit, setDeposit] = React.useState('');
+  const [withdrawAmount, setName]    = React.useState('');
+  const [withdraw, seWithdraw] = React.useState('');
   const ctx = React.useContext(UserContext);  
 
   function digitalInput(field, label){
       if (!field) {
-        setStatus('Error: ' + label);
+        setStatus('Success: ' + label);
         setTimeout(() => setStatus(''),3000);
         return false;
       }
@@ -17,11 +17,29 @@ function Withdraw(){
   }
 
   function handleCreate(){
-    console.log(depositAmount);
-    if (!digitalInput(depositAmount,     'This feature is currently unavailable (WIP)'))     return;
-        ctx.users.push({depositAmount,balance:100});
+    console.log('*******');
+    // console.log(withdrawAmount);
+    console.log(ctx.users[0].setBalance(ctx.users[0].balance-withdraw))     // balance updates at every withdraw         
+    console.log('******');
+    if (!digitalInput(withdrawAmount,     'Your balance got updated!!!'))     return;   //changed message
+
+
+
+        ctx.users.push({withdrawAmount,balance:100});
     setShow(false);
   }    
+
+  function checkPos(e){
+    console.log(e.target.value)
+    if(e.target.value>=0){
+      seWithdraw(Number(e.currentTarget.value))  //added Number () to convert input string to number
+    }else{
+      console.log("enter a positive value")
+    }
+   // e => seWithdraw(e.currentTarget.value
+    console.log("YOU HIT THIS FUNCTION")
+  }
+
 
   function clearForm(){
     setName('');
@@ -31,13 +49,13 @@ function Withdraw(){
     <Card
     bgcolor="info"
     txtcolor="light"
-    header=" Balance"
+    header={`🏛 Balance ${ctx.users[0].balance}`}            // displayed balance amount
     status={status}
     body={show ? (  
             <>
            
             Withdraw amount<br/>
-            <input type="number" className="form-control" id="deposit" placeholder="Enter amount" value={deposit} onChange={e => setDeposit(e.currentTarget.value)}/><br/>
+            <input type="number" className="form-control" id="withdraw" placeholder="Enter amount" value={withdraw} onChange={checkPos}/><br/>
             <button type="submit" className="btn btn-light" onClick={handleCreate}>Withdraw </button>
             </>
           ):(

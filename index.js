@@ -2,6 +2,7 @@ function Spa() {
 
   const [userBalance, setBalance]=React.useState(1000)
 
+
   return (
     <HashRouter>
       <NavBar/>
