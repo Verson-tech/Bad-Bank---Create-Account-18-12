@@ -18,19 +18,19 @@ function Withdraw() {
   function handleCreate() {
     console.log("*******");
     // console.log(withdrawAmount);
-    console.log(ctx.users[0].setBalance(ctx.users[0].balance - withdraw)); // balance updates at every withdraw
+    console.log(Number(ctx.users[0].setBalance(Number(ctx.users[0].balance - withdraw)))); // balance updates at every withdraw
     console.log("******");
     if (
       !validate(
         withdrawAmount,
         `Your balance got updated!!! Current total: ${
-          ctx.users[0].balance - withdraw
+          Number(ctx.users[0].balance - withdraw)
         }`
       )
     )
       return; //changed message
 
-    ctx.users.push({ withdrawAmount, balance });
+    Number(ctx.users.push({ withdrawAmount, balance }));
     setShow(false);
   }
 
@@ -53,7 +53,7 @@ function Withdraw() {
     <Card
       bgcolor="info"
       txtcolor="light"
-      header={`🏛 Balance ${ctx.users[0].balance}`} // displayed balance amount
+      header={`🏛 Balance ${Number(ctx.users[0].balance)}`} // displayed balance amount
       status={status}
       body={
         show ? (
