@@ -22,7 +22,8 @@ function CreateAccount() {
     if (!validate(password.length > 8, "password"))
       return setStatus("Error: password should be at least 8 characters long");
     console.log(ctx.users);
-    ctx.users[0].passData("ryan", "ryan@gmail.com");
+    // ctx.users[0].passData("ryan", "ryan@gmail.com");
+    ctx.users[0].passData(name, email, password);
     ctx.users.push({ name, email, password, balance });
     setShow(false);
   }
