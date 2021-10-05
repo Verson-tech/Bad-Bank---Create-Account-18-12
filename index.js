@@ -3,7 +3,7 @@ function Spa() {
   const [userBalance, setBalance]=React.useState(1000)
   const [allUsers, setAllUsers]= React.useState([])
   const [currentUser, setCurrentUser] = React.useState()
-
+  const ctx = React.useContext(UserContext);
   function currentUser1(name, email, password, balance){
     // console.log("IN the currentUser function ========")
     // console.log(name)
@@ -12,14 +12,14 @@ function Spa() {
     // console.log(balance)
     // console.log("====================================")
    setAllUsers('')
-  ctx.users.push({ value });
+  ctx.users.push({ name, email, password, balance });
   }
 
   return (
     <HashRouter>
       <NavBar/>
-      {/* <UserContext.Provider value={{users:[{name:'abel',email:'abel@mit.edu',password:'secret',balance:userBalance, setBalance:setBalance, passData:currentUser1}]}}> */}
       <UserContext.Provider value={{users:[{ passData:currentUser1}]}}>
+      {/* <UserContext.Provider value={{users:[{ passData:currentUser1}]}}> */}
         <div className="container" style={{padding: "20px"}}>
           <Route path="/" exact component={Home} />
           <Route path="/CreateAccount/" component={CreateAccount} />
